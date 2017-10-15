@@ -12,10 +12,6 @@
 
 //INPUTS
 int pk[2] = {11,5}; //IRs right(0) and left(1)
-#define Poke_IR_Right A2
-#define Poke_IR_Left A8
-#define read_IR_Right digitalRead(Poke_IR_Right)
-#define read_IR_Left digitalRead(Poke_IR_Left)
 
 //OUTPUTS
 int syncLED = 47;       // Square wave from 100ms after poke in to poke out, PORT: SPKR3
@@ -23,7 +19,7 @@ int spkR = 3;          // speaker for valid pokes PORT: SPKR1
 int led[] = {12, 6};    // LEDs right(0) and left(1) pokes PORT: POKE_1, POKE_3
 int valv[] = {4, 7};    // valves right(0) and left(1) pokesPORT: POKE_1, POKE_3
 int ledHouse = 10;      // masking light PORT: POKE2 (starts 100ms after poke in, ends TimeAfterPoke after poke out, with the frequency of the stimulation)
-int aoPIN = 46;         // laser stimulation PORT: LZR 
+int aoPIN = 53;         // laser stimulation PORT: LZR 
 //////////////                Set Task parameters
 //General settings:
 unsigned long   MinPokeTime = 100;            //Time an individual poke has to last to count as a poke (to discard whisker detection, e.g.)
@@ -84,10 +80,8 @@ unsigned long PokingOnset = 0;
 void setup() {
 
   //INPUTS
-  //pinMode(pk[0], INPUT);
-  //pinMode(pk[1], INPUT);
-  pinMode(Poke_IR_Right, INPUT);
-  pinMode(Poke_IR_Left, INPUT);
+  pinMode(pk[0], INPUT);
+  pinMode(pk[1], INPUT);
 
   //OUTPUTS
   pinMode(syncLED, OUTPUT);
@@ -107,6 +101,8 @@ void setup() {
   digitalWrite(valv[1], LOW);
   digitalWrite(valv[0], LOW);
   digitalWrite(ledHouse, LOW);
+  digitalWrite(pk[0],LOW);
+  digitalWrite(pk[0],LOW);
 
   // Start writing to txt on computer via serial
   Serial.begin(115200);
@@ -227,10 +223,8 @@ void task() {
 
   // Read pokes and check whethe LED and speaker need to stop or if the animal has poked out
 
-  // for (int i = 0; i < 2; i++) { valuePk[i] = digitalRead(pk[i]);}
+  for (int i = 0; i < 2; i++) { valuePk[i] = digitalRead(pk[i]);}
   // Detect Poke Out
-  valuePk[0] = read_IR_Right;
-  valuePk[1] = read_IR_Left;
 
   if (!valuePk[1] && !valuePk[0] && PokedIn) {
     TimeLastPokeOut = millis();

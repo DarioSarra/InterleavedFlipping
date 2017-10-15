@@ -10,9 +10,8 @@ int TimeDelay = 10000;
 void setup() {
   pinMode(valvL, OUTPUT);
   pinMode(valvR, OUTPUT);
-  //pinMode(aoPIN, OUTPUT);
-  //digitalWrite(aoPIN, LOW);
 
+  
   digitalWrite(valvR, HIGH);
   delay(TimeDelay);
   digitalWrite(valvR, LOW);

@@ -5,7 +5,7 @@ long int pause = 2000;
 int PulseWidth = 10; //in ms
 int Serialinput = -1;
 int ledHouse = 47;
-int aoPIN = 46;
+int aoPIN = 53;
 
 void setup() {
   // put your setup code here, to run once:

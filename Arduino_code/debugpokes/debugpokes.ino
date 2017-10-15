@@ -1,9 +1,5 @@
 //INPUTS
-//int pk[2] = {11, 5}; //IRs right(0) and left(1)
-#define Poke_IR_Right A2
-#define Poke_IR_Left A8
-#define read_IR_Right digitalRead(Poke_IR_Right)
-#define read_IR_Left digitalRead(Poke_IR_Left)
+int pk[2] = {11, 5}; //IRs right(0) and left(1)
 
 //OUTPUTS
 int syncLED = 47;       // Square wave from 100ms after poke in to poke out, PORT: SPKR3
@@ -37,8 +33,10 @@ int   durRew[2];
 
 void setup() {
   //INPUTS
-  pinMode(Poke_IR_Right, INPUT);
-  pinMode(Poke_IR_Left, INPUT);
+  pinMode(pk[0], INPUT);
+  pinMode(pk[1], INPUT);
+  digitalWrite(pk[0],LOW);
+  digitalWrite(pk[1],LOW);
 
   //OUTPUTS
   pinMode(spkR, OUTPUT);
@@ -59,8 +57,8 @@ void loop() {
   // variables = protocollo, valid poke, state
 void task() {
   // put your main code here, to run repeatedly:
-  valuePk[0] = read_IR_Right;
-  valuePk[1] = read_IR_Left;
+  valuePk[0] = digitalRead(pk[0]);
+  valuePk[1] = digitalRead(pk[1]);
 
   if (!valuePk[1] && !valuePk[0] && PokedIn) {
     PokedIn = false;
